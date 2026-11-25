@@ -2,8 +2,8 @@
 
 Maquetación web de un emprendimiento familiar de **zinguería, techados, Durlock (construcción en seco) y herrería**. Diseño previo realizado en Figma; maquetado con HTML5, Bootstrap 5 y estilos personalizados.
 
-- **Sitio en vivo:** https://TU-USUARIO.github.io/NOMBRE-DEL-REPO/
-- **Repositorio:** https://github.com/TU-USUARIO/NOMBRE-DEL-REPO
+- **Sitio en vivo:** https://joakoarz.github.io/proyecto-carza/
+- **Repositorio:** https://github.com/JoakoARZ/proyecto-carza
 
 ## Tecnologías
 
@@ -39,22 +39,3 @@ familia-acero/
 8. Paso a paso (proceso)
 9. Compromiso + Preguntas frecuentes
 10. Contacto (formulario + WhatsApp) y footer
-
-## Flujo de trabajo con Git
-
-- Rama `main`: versión estable y desplegada.
-- Rama `feature/maquetacion`: desarrollo de la maqueta.
-- Integración mediante Pull Request hacia `main`.
-
-## Cómo correrlo en local
-
-Abrí `index.html` en el navegador, o usá la extensión _Live Server_ de VS Code.
-
-```bash
-npm install
-npm run format
-```
-
-## Autor
-
-Tu nombre – Trabajo práctico de maquetación web.
