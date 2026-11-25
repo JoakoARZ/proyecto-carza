@@ -15,13 +15,13 @@ Herramienta: Lighthouse (Chrome DevTools). Modo: Navegación. Dispositivo: Móvi
 
 ## Fallas de accesibilidad detectadas y correcciones
 
-| #   | Falla detectada                                                   | Corrección aplicada                                      |
-| --- | ----------------------------------------------------------------- | -------------------------------------------------------- |
-| 1   | (ej. Contraste insuficiente en textos color óxido)                | Se oscureció el color a `#b3411f` (ratio > 4.5:1)        |
-| 2   | (ej. Imágenes sin `alt`)                                          | Se agregaron textos alternativos descriptivos            |
-| 3   | (ej. Campos de formulario sin `label`)                            | Se asociaron `label for` a cada `input`                  |
-| 4   | (ej. Enlaces sin texto discernible / `target="_blank"` sin aviso) | Se agregó texto oculto y `rel="noopener noreferrer"`     |
-| 5   | (ej. Sin enlace "Saltar al contenido")                            | Se agregó `skip-link`                                    |
+| #   | Falla detectada                                                   | Corrección aplicada                                  |
+| --- | ----------------------------------------------------------------- | ---------------------------------------------------- |
+| 1   | (ej. Contraste insuficiente en textos color óxido)                | Se oscureció el color a `#b3411f` (ratio > 4.5:1)    |
+| 2   | (ej. Imágenes sin `alt`)                                          | Se agregaron textos alternativos descriptivos        |
+| 3   | (ej. Campos de formulario sin `label`)                            | Se asociaron `label for` a cada `input`              |
+| 4   | (ej. Enlaces sin texto discernible / `target="_blank"` sin aviso) | Se agregó texto oculto y `rel="noopener noreferrer"` |
+| 5   | (ej. Sin enlace "Saltar al contenido")                            | Se agregó `skip-link`                                |
 
 > Reemplazá la columna "Falla detectada" por lo que realmente te marque Lighthouse.
 

@@ -48,7 +48,7 @@ familia-acero/
 
 ## Cómo correrlo en local
 
-Abrí `index.html` en el navegador, o usá la extensión *Live Server* de VS Code.
+Abrí `index.html` en el navegador, o usá la extensión _Live Server_ de VS Code.
 
 ```bash
 npm install
