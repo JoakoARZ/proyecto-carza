@@ -32,7 +32,7 @@ function e(?string $texto): string
 
 cargar_env(__DIR__ . '/../.env');
 
-$nombre_sitio   = env('APP_NAME', 'Familia Acero');
+$nombre_sitio   = env('APP_NAME', 'CARZA');
 $email_contacto = env('APP_EMAIL', 'contacto@example.com');
 $whatsapp       = env('WHATSAPP_NUMBER', '5491100000000');
 $app_env        = env('APP_ENV', 'local');
