@@ -127,6 +127,50 @@ Todo el desarrollo de esta entrega está en la carpeta [`clase5/`](clase5/). Es 
 
 Para ejecutarlos, abrí phpMyAdmin (`http://localhost/phpmyadmin`) y corré primero `schema.sql` y después `consultas.sql`.
 
+## TP N° 7 – Persistencia y conexión PHP-MySQL segura (PDO)
+
+Todo el desarrollo está en la carpeta [`tp7/`](tp7/). Es el sitio de CARZA (PHP + SSI) conectado a la base `carza_db` diseñada en el TP6.
+
+### Qué se implementó
+
+| Módulo | Archivo | Operación |
+| --- | --- | --- |
+| Formulario de presupuesto (público) | `tp7/contacto.php` | **Create**: guarda la consulta en `consultas` y su rubro en `consulta_categoria` (con transacción) |
+| Galería de trabajos (público) | `tp7/trabajos.php` | **Read**: lee `trabajos` con `INNER JOIN` y filtra por palabra clave y categoría (GET) |
+| Panel: trabajos | `tp7/admin/index.php`, `crear.php`, `editar.php`, `eliminar.php` | **CRUD completo** sobre la tabla `trabajos` |
+| Panel: consultas | `tp7/admin/consultas.php` | **Read / Update / Delete**: listar, cambiar estado y eliminar consultas |
+
+### Seguridad
+
+- Conexión PDO en `tp7/config/conexion.php` con `try-catch (PDOException)`, `ERRMODE_EXCEPTION` y `EMULATE_PREPARES = false`. Los datos de conexión salen del `.env` (no se sube al repositorio).
+- **Consultas preparadas** con marcadores nombrados en todas las operaciones (`INSERT`, `SELECT`, `UPDATE`, `DELETE`).
+- **XSS:** toda variable impresa en las vistas pasa por `e()` (`htmlspecialchars`).
+- Validación en servidor de todos los formularios y listas permitidas para categorías, localidades y estados.
+- Las bajas se hacen por **POST con token CSRF**, no por enlaces GET.
+
+### Capturas de pantalla
+
+**Formulario de contacto guardando una consulta**
+![Contacto](tp7/capturas/01-contacto-guardado.png)
+
+**Consulta registrada en phpMyAdmin**
+![phpMyAdmin](tp7/capturas/02-phpmyadmin-consulta.png)
+
+**Panel: listado de trabajos**
+![Listado](tp7/capturas/03-admin-listado.png)
+
+**Panel: alta de un trabajo**
+![Crear](tp7/capturas/04-admin-crear.png)
+
+**Panel: edición**
+![Editar](tp7/capturas/05-admin-editar.png)
+
+**Panel: eliminación (confirmación)**
+![Eliminar](tp7/capturas/06-admin-eliminar.png)
+
+**Panel: consultas recibidas**
+![Consultas](tp7/capturas/07-admin-consultas.png)
+
 
 ## Autor
 
