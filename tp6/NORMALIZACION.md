@@ -10,13 +10,13 @@ Un pedido de presupuesto tal como llegaría del formulario de contacto, guardado
 
 | id_consulta | cliente | teléfonos | email | servicios_pedidos | localidad | provincia | estado | descripcion_estado | fecha |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | María Gómez | 3510000002, 3510000010 | maria.gomez@example.com | Zinguería y canaletas, Herrería | Córdoba | Córdoba | Pendiente | Aún sin contactar | 2026-11-20 |
-| 2 | Carlos Pérez | 3510000003 | carlos.perez@example.com | Durlock | Villa Carlos Paz | Córdoba | Pendiente | Aún sin contactar | 2026-11-21 |
+| 1 | María Gómez | 3870000002, 3870000010 | maria.gomez@example.com | Zinguería y canaletas, Herrería | Salta | Salta | Pendiente | Aún sin contactar | 2026-11-20 |
+| 2 | Carlos Pérez | 3870000003 | carlos.perez@example.com | Durlock | San Lorenzo | Salta | Pendiente | Aún sin contactar | 2026-11-21 |
 
 Problemas que se observan:
 
 - **Campos multivalorados:** `teléfonos` y `servicios_pedidos` guardan varios valores en una sola celda.
-- **Redundancia:** "Córdoba" (provincia) y "Aún sin contactar" (descripción del estado) se repiten en cada fila.
+- **Redundancia:** "Salta" (provincia) y "Aún sin contactar" (descripción del estado) se repiten en cada fila.
 - **Anomalías:** si se cambia el texto de un estado hay que modificar muchas filas, y no se puede registrar un servicio o una provincia sin que exista una consulta.
 
 ### 2. Proceso de normalización
@@ -29,9 +29,9 @@ Clave primaria compuesta: **(id_consulta, servicio)**
 
 | id_consulta | servicio | cliente | telefono | email | localidad | provincia | estado | descripcion_estado | fecha |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Zinguería y canaletas | María Gómez | 3510000002 | maria.gomez@example.com | Córdoba | Córdoba | Pendiente | Aún sin contactar | 2026-11-20 |
-| 1 | Herrería | María Gómez | 3510000002 | maria.gomez@example.com | Córdoba | Córdoba | Pendiente | Aún sin contactar | 2026-11-20 |
-| 2 | Durlock | Carlos Pérez | 3510000003 | carlos.perez@example.com | Villa Carlos Paz | Córdoba | Pendiente | Aún sin contactar | 2026-11-21 |
+| 1 | Zinguería y canaletas | María Gómez | 3870000002 | maria.gomez@example.com | Salta | Salta | Pendiente | Aún sin contactar | 2026-11-20 |
+| 1 | Herrería | María Gómez | 3870000002 | maria.gomez@example.com | Salta | Salta | Pendiente | Aún sin contactar | 2026-11-20 |
+| 2 | Durlock | Carlos Pérez | 3870000003 | carlos.perez@example.com | San Lorenzo | Salta | Pendiente | Aún sin contactar | 2026-11-21 |
 
 #### Segunda Forma Normal (2FN): sin dependencias parciales
 
@@ -137,10 +137,3 @@ erDiagram
 
 - [`schema.sql`](schema.sql): creación de la base `carza_db`, tablas, claves foráneas, campos de auditoría e índices (`idx_consultas_email`, `idx_consultas_estado_fecha`, `idx_trabajos_categoria_publicado`).
 - [`consultas.sql`](consultas.sql): inserciones, lecturas con `WHERE`, `ORDER BY` e `INNER JOIN`, `UPDATE` y `DELETE`.
-
-### Cómo ejecutarlos en local
-
-1. Iniciá **Apache** y **MySQL** desde XAMPP/Laragon.
-2. Entrá a `http://localhost/phpmyadmin`.
-3. Pestaña **SQL**: pegá y ejecutá el contenido de `schema.sql`.
-4. Seleccioná la base `carza_db`, pestaña **SQL**: pegá y ejecutá `consultas.sql`.

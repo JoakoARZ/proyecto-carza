@@ -23,52 +23,52 @@ INSERT INTO categorias (nombre, descripcion) VALUES
 INSERT INTO estados_consulta (nombre) VALUES
   ('Pendiente'), ('En contacto'), ('Presupuestada'), ('Cerrada'), ('Descartada');
 
-INSERT INTO provincias (nombre) VALUES ('Córdoba'), ('Mendoza');
+INSERT INTO provincias (nombre) VALUES ('Salta'), ('Jujuy');
 
 INSERT INTO localidades (provincia_id, nombre) VALUES
-  ((SELECT id FROM provincias WHERE nombre = 'Córdoba'), 'Córdoba'),
-  ((SELECT id FROM provincias WHERE nombre = 'Córdoba'), 'Villa Carlos Paz'),
-  ((SELECT id FROM provincias WHERE nombre = 'Mendoza'), 'Godoy Cruz');
+  ((SELECT id FROM provincias WHERE nombre = 'Salta'), 'Salta'),
+  ((SELECT id FROM provincias WHERE nombre = 'Salta'), 'San Lorenzo'),
+  ((SELECT id FROM provincias WHERE nombre = 'Jujuy'), 'San Salvador de Jujuy');
 
 -- Usuarios (los hashes son de ejemplo; en el TP7 se generan con password_hash())
 INSERT INTO usuarios (rol_id, nombre, apellido, email, password_hash, telefono) VALUES
   ((SELECT id FROM roles WHERE nombre = 'admin'),
    'Jairo', 'Admin', 'admin@carza.com',
-   '$2y$10$EJEMPLO.hash.no.real.solo.para.pruebas.de.carga.inicial.0000', '3510000001'),
+   '$2y$10$EJEMPLO.hash.no.real.solo.para.pruebas.de.carga.inicial.0000', '3870000001'),
   ((SELECT id FROM roles WHERE nombre = 'cliente'),
    'María', 'Gómez', 'maria.gomez@example.com',
-   '$2y$10$EJEMPLO.hash.no.real.solo.para.pruebas.de.carga.inicial.0000', '3510000002');
+   '$2y$10$EJEMPLO.hash.no.real.solo.para.pruebas.de.carga.inicial.0000', '3870000002');
 
 -- Tabla principal 1: trabajos (con FK a categorías, usuarios y localidades)
 INSERT INTO trabajos (categoria_id, usuario_id, localidad_id, titulo, descripcion, imagen, publicado, fecha_obra) VALUES
   ((SELECT id FROM categorias WHERE nombre = 'Techados y estructuras'),
    (SELECT id FROM usuarios WHERE email = 'admin@carza.com'),
-   (SELECT id FROM localidades WHERE nombre = 'Villa Carlos Paz'),
+   (SELECT id FROM localidades WHERE nombre = 'San Lorenzo'),
    'Techo de chapa prepintada', 'Cubierta de chapa prepintada en vivienda familiar.', 'galeria-1.jpg', 1, '2026-08-15'),
   ((SELECT id FROM categorias WHERE nombre = 'Herrería'),
    (SELECT id FROM usuarios WHERE email = 'admin@carza.com'),
-   (SELECT id FROM localidades WHERE nombre = 'Córdoba'),
+   (SELECT id FROM localidades WHERE nombre = 'Salta'),
    'Portón de líneas simples', 'Portón corredizo de hierro con terminación negra.', 'galeria-4.jpg', 1, '2026-09-20'),
   ((SELECT id FROM categorias WHERE nombre = 'Durlock'),
    (SELECT id FROM usuarios WHERE email = 'admin@carza.com'),
-   (SELECT id FROM localidades WHERE nombre = 'Godoy Cruz'),
+   (SELECT id FROM localidades WHERE nombre = 'San Salvador de Jujuy'),
    'Cielorraso con luz perimetral', 'Cielorraso de Durlock con iluminación indirecta.', 'galeria-3.jpg', 0, '2026-10-05');
 
 -- Tabla principal 2: consultas (estado inicial y localidad por FK)
 INSERT INTO consultas (usuario_id, localidad_id, estado_id, nombre, telefono, email, mensaje) VALUES
   ((SELECT id FROM usuarios WHERE email = 'maria.gomez@example.com'),
-   (SELECT id FROM localidades WHERE nombre = 'Córdoba'),
+   (SELECT id FROM localidades WHERE nombre = 'Salta'),
    (SELECT id FROM estados_consulta WHERE nombre = 'Pendiente'),
-   'María Gómez', '3510000002', 'maria.gomez@example.com',
+   'María Gómez', '3870000002', 'maria.gomez@example.com',
    'Necesito cambiar las canaletas y hacer un portón.'),
   (NULL,
-   (SELECT id FROM localidades WHERE nombre = 'Villa Carlos Paz'),
+   (SELECT id FROM localidades WHERE nombre = 'San Lorenzo'),
    (SELECT id FROM estados_consulta WHERE nombre = 'Pendiente'),
-   'Carlos Pérez', '3510000003', 'carlos.perez@example.com',
+   'Carlos Pérez', '3870000003', 'carlos.perez@example.com',
    'Quiero presupuesto para un cielorraso de Durlock.'),
   (NULL, NULL,
    (SELECT id FROM estados_consulta WHERE nombre = 'Pendiente'),
-   'Consulta de prueba', '3510000004', 'prueba.baja@example.com',
+   'Consulta de prueba', '3870000004', 'prueba.baja@example.com',
    'Registro creado solo para probar el DELETE.');
 
 -- Tabla de relación N:M: rubros pedidos en cada consulta
