@@ -1,4 +1,4 @@
-// Filtro de la galería de trabajos
+// Filtro de la galería de trabajos (solo existe en trabajos.php)
 const botones = document.querySelectorAll(".btn-filtro");
 const items = document.querySelectorAll("#galeria .item");
 
@@ -20,21 +20,23 @@ botones.forEach((boton) => {
   });
 });
 
-// Validación simple del formulario de presupuesto
+// Validación del formulario de presupuesto (solo existe en contacto.php)
 const form = document.getElementById("form-presupuesto");
 const ok = document.getElementById("form-ok");
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  ok.classList.add("d-none");
+if (form) {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    ok.classList.add("d-none");
 
-  if (!form.checkValidity()) {
-    form.classList.add("was-validated");
-    return;
-  }
+    if (!form.checkValidity()) {
+      form.classList.add("was-validated");
+      return;
+    }
 
-  // Maqueta: acá se conectaría con un backend o servicio de formularios.
-  form.reset();
-  form.classList.remove("was-validated");
-  ok.classList.remove("d-none");
-});
+    // Maqueta: acá se conectaría con un backend o servicio de formularios.
+    form.reset();
+    form.classList.remove("was-validated");
+    ok.classList.remove("d-none");
+  });
+}
