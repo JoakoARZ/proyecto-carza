@@ -9,6 +9,8 @@ Sitio web de un emprendimiento familiar de **zinguería, techados, Durlock (cons
 
 ## Prototipo de Figma
 
+https://www.figma.com/design/GXLKNmkhT7ZV941HH8dCkk/Sin-t%C3%ADtulo?node-id=0-1&t=fMAWgxlCZfZc2zTP-0
+
 ## Tecnologías utilizadas
 
 - HTML5 semántico
@@ -41,28 +43,6 @@ carza/
 ├── .env.example
 └── .gitignore             # incluye .env
 ```
-
-## Instalación y ejecución local
-
-1. Instalá [XAMPP](https://www.apachefriends.org/) (o Laragon) con **PHP 8.x**.
-2. Cloná el repositorio dentro de la carpeta pública del servidor:
-   - XAMPP: `C:\xampp\htdocs\`
-   - Laragon: `C:\laragon\www\`
-
-   ```bash
-   git clone https://github.com/TU-USUARIO/NOMBRE-REPO.git
-   ```
-
-3. Creá tu archivo de entorno a partir de la plantilla:
-
-   ```bash
-   cp .env.example .env
-   ```
-
-   (En Windows: `copy .env.example .env`) y completá tus datos.
-
-4. Iniciá **Apache** desde el panel de XAMPP/Laragon.
-5. Abrí `http://localhost/NOMBRE-REPO/` en el navegador.
 
 ## Variables de entorno
 
