@@ -171,6 +171,70 @@ Todo el desarrollo está en la carpeta [`tp7/`](tp7/). Es el sitio de CARZA (PHP
 **Panel: consultas recibidas**
 ![Consultas](tp7/capturas/07-admin-consultas.png)
 
+## TP N° 8 – Manejo de estado, sesiones y autenticación
+
+Todo el desarrollo está en la carpeta [`tp8/`](tp8/): el sitio de CARZA con registro, inicio de sesión, cierre de sesión, protección de rutas y control de acceso por roles. La migración de la base está en [`tp8/sql/migracion_tp8.sql`](tp8/sql/migracion_tp8.sql).
+
+### Módulos
+
+| Archivo | Función |
+| --- | --- |
+| `tp8/registro.php` | Alta de usuarios: sanitización, validación, verificación de correo único y `password_hash($password, PASSWORD_BCRYPT)` |
+| `tp8/login.php` | `password_verify()`, `session_regenerate_id(true)` y carga de `$_SESSION['usuario_id']`, `['usuario_nombre']` y `['rol']` |
+| `tp8/includes/auth_guard.php` | Guardián de rutas: sin sesión redirige a `login.php?error=acceso_denegado`; con `$rol_requerido` restringe por rol |
+| `tp8/logout.php` | Vacía `$_SESSION`, elimina la cookie de sesión y ejecuta `session_destroy()` |
+| `tp8/perfil.php` | Página protegida (cualquier usuario logueado): datos de la cuenta y estado de sus consultas |
+| `tp8/admin/*` | Panel protegido: **solo el rol `admin`** |
+
+### Base de datos
+
+La tabla `usuarios` del TP6 cumple la estructura pedida, con el diseño normalizado:
+
+| Pedido en el TP8 | En `carza_db` |
+| --- | --- |
+| `id` | `usuarios.id` (PK, auto-increment) |
+| `nombre` | `usuarios.nombre` (+ `apellido`) |
+| `email` (único) | `usuarios.email` (UNIQUE) |
+| `password` (VARCHAR 255) | `usuarios.password_hash` (VARCHAR 255, hash bcrypt) |
+| `rol` ('admin' / 'usuario') | `usuarios.rol_id` → `roles.nombre` ('admin' / 'usuario'), normalizado en 3FN |
+| `created_at` | `usuarios.created_at` |
+
+### Seguridad aplicada
+
+- Contraseñas con **bcrypt** (`password_hash` / `password_verify`); nunca se guardan ni se muestran en texto plano. Se limita a 72 caracteres, el máximo que usa bcrypt.
+- **Session fixation:** `session_regenerate_id(true)` al iniciar sesión.
+- **Cookie de sesión segura:** `HttpOnly`, `SameSite=Lax`, `Secure` bajo HTTPS, modo estricto y solo por cookies.
+- Mensaje de error genérico en el login (no revela si el correo existe) y tiempo de respuesta similar.
+- **XSS:** toda variable impresa pasa por `htmlspecialchars`.
+- **SQL Injection:** consultas preparadas con PDO en todas las operaciones.
+- **CSRF:** token en los formularios de registro, login, logout y del panel.
+- **Control de acceso por rol:** el panel `/admin/` exige `$rol_requerido = 'admin'`.
+
+### Capturas de pantalla
+
+**Registro con errores de validación**
+![Registro con errores](tp8/capturas/01-registro-errores.png)
+
+**Usuario guardado con el hash en phpMyAdmin**
+![Hash en la base](tp8/capturas/02-bd-hash.png)
+
+**Login con credenciales incorrectas**
+![Login incorrecto](tp8/capturas/03-login-error.png)
+
+**Login correcto: página "Mi cuenta"**
+![Mi cuenta](tp8/capturas/04-perfil.png)
+
+**Acceso a una página protegida sin sesión (redirige al login)**
+![Acceso denegado](tp8/capturas/05-acceso-denegado.png)
+
+**Usuario sin rol admin intentando entrar al panel**
+![Sin permisos](tp8/capturas/06-sin-permisos.png)
+
+**Administrador dentro del panel**
+![Panel admin](tp8/capturas/07-admin.png)
+
+**Cierre de sesión**
+![Logout](tp8/capturas/08-logout.png)
 
 ## Autor
 
