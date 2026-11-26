@@ -118,6 +118,15 @@ Todo el desarrollo de esta entrega está en la carpeta [`clase5/`](clase5/). Es 
 1. Copiá `clase5/.env.example` como `clase5/.env`.
 2. Iniciá Apache en XAMPP/Laragon y abrí `http://localhost/proyecto-carza/clase5/`.
 
+## TP N° 6 – Diseño y creación del esquema relacional en MySQL
+
+
+- [`NORMALIZACION.md`](tp6/NORMALIZACION.md): normalización (1FN, 2FN, 3FN) y diagrama entidad-relación.
+- [`schema.sql`](tp6/schema.sql): script DDL de la base `carza_db` (9 tablas, claves foráneas, auditoría e índices).
+- [`consultas.sql`](tp6/consultas.sql): pruebas CRUD (INSERT, SELECT con WHERE/ORDER BY/INNER JOIN, UPDATE, DELETE).
+
+Para ejecutarlos, abrí phpMyAdmin (`http://localhost/phpmyadmin`) y corré primero `schema.sql` y después `consultas.sql`.
+
 
 ## Autor
 
