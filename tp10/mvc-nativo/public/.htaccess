@@ -1,0 +1,5 @@
+# Todas las URLs que no sean archivos reales se envían al controlador frontal
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]
