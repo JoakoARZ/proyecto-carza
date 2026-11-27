@@ -236,6 +236,47 @@ La tabla `usuarios` del TP6 cumple la estructura pedida, con el diseño normaliz
 **Cierre de sesión**
 ![Logout](tp8/capturas/08-logout.png)
 
+## TP N° 9 – Comunicación asincrónica y APIs (AJAX & JSON)
+
+### Endpoints (`tp9/api/`)
+
+| Endpoint | Método | Qué hace | Códigos HTTP |
+| --- | --- | --- | --- |
+| `buscar_trabajos.php?q=&categoria=` | GET | Busca trabajos publicados por palabra clave y categoría | 200, 400, 404, 405, 500 |
+| `trabajo.php?id=` | GET | Devuelve el detalle de un trabajo | 200, 400, 404, 405, 500 |
+| `consulta_estado.php` | POST (JSON) | Cambia el estado de una consulta (solo admin, con token CSRF) | 200, 400, 401, 403, 404, 405, 500 |
+
+Todas las respuestas usan `Content-Type: application/json; charset=utf-8` y la forma `{ "status": "success|error", "message": "...", "data": ... }`. Usan PDO con consultas preparadas y `json_encode()`.
+
+### Cliente (`tp9/js/app.js`)
+
+- **Búsqueda en vivo** en `trabajos.php`: evento `input` (con espera de 300 ms), `change` de la categoría y `submit` con `preventDefault()`. Se cancela la petición anterior con `AbortController`.
+- **Detalle en ventana modal:** al hacer clic en un trabajo se pide `api/trabajo.php` y se muestra sin salir de la página.
+- **Cambio de estado sin recargar** en `admin/consultas.php`.
+- Manejo de errores con `try/catch` (errores de red y códigos HTTP no exitosos) y mensajes en pantalla.
+- El DOM se arma con `createElement` y `textContent`, no con `innerHTML`, para evitar XSS.
+- Sin JavaScript el sitio sigue funcionando: la búsqueda y el cambio de estado usan los formularios del servidor.
+
+### Capturas de pantalla
+
+**Búsqueda en vivo (la URL cambia, la página no recarga)**
+![Búsqueda](tp9/capturas/01-busqueda.png)
+
+**Pestaña Network con la petición `buscar_trabajos.php` y su respuesta JSON**
+![Network](tp9/capturas/02-network-json.png)
+
+**Detalle de un trabajo en el modal**
+![Modal](tp9/capturas/03-modal.png)
+
+**Endpoint abierto en el navegador (JSON)**
+![JSON](tp9/capturas/04-endpoint-json.png)
+
+**Respuesta de error 404 / 400**
+![Error](tp9/capturas/05-error-api.png)
+
+**Cambio de estado en el panel con mensaje de éxito**
+![Estado](tp9/capturas/06-estado-ajax.png)
+
 ## Autor
 
 Arzadum, Joaquin Jairo – Programación Web, Unidad 4.
