@@ -277,6 +277,66 @@ Todas las respuestas usan `Content-Type: application/json; charset=utf-8` y la f
 **Cambio de estado en el panel con mensaje de éxito**
 ![Estado](tp9/capturas/06-estado-ajax.png)
 
+## TP N° 10 – Refactorización a MVC e implementación con framework
+
+### Parte A – MVC nativo (PHP puro): [`tp10/mvc-nativo/`](tp10/mvc-nativo/)
+
+Se refactorizaron los módulos de **catálogo de trabajos** y **autenticación** (registro, login, logout y cuenta) a una arquitectura MVC.
+
+```
+mvc-nativo/
+├── public/               # única carpeta pública: index.php (controlador frontal), .htaccess, css, img
+└── app/
+    ├── Core/             # Router, Database (PDO), View, Sesion, Env, Controller base
+    ├── Models/           # Trabajo, Categoria, Usuario  -> solo consultas SQL con PDO preparado
+    ├── Controllers/      # Home, Trabajo, Auth, Cuenta -> reciben la solicitud, validan y eligen la vista
+    ├── Views/            # plantillas HTML (layout + vistas), sin SQL
+    └── routes.php        # tabla de rutas
+```
+
+| Capa | Responsabilidad | Ejemplo |
+| --- | --- | --- |
+| **Modelo** | Acceso a datos (PDO + consultas preparadas) | `Usuario::porEmail()`, `Trabajo::publicados()` |
+| **Controlador** | Lee la entrada, valida, llama al modelo, elige la vista | `AuthController::login()` |
+| **Vista** | Solo marcado HTML; imprime con `e()` (`htmlspecialchars`) | `Views/trabajos/index.php` |
+
+Mantiene las medidas de seguridad de los TPs anteriores: bcrypt, `session_regenerate_id(true)`, cookie de sesión segura, token CSRF, validación en servidor y protección contra XSS e inyección SQL.
+
+### Parte B – Módulo en Laravel: [`tp10/laravel-carza/`](tp10/laravel-carza/)
+
+Módulo independiente de **reportes de consultas** sobre la misma base `carza_db`:
+
+| Componente de Laravel | Archivo |
+| --- | --- |
+| **Routing** | `routes/web.php` → `/reportes` y `/api/reportes/consultas` |
+| **Controlador** | `app/Http/Controllers/ReporteController.php` |
+| **Modelos (Eloquent)** | `app/Models/Consulta.php`, `EstadoConsulta.php`, `Categoria.php` (relaciones `belongsTo`, `hasMany` y `belongsToMany`) |
+| **Vista (Blade)** | `resources/views/reportes/index.blade.php` con el layout `layouts/app.blade.php` |
+| **API REST (JSON)** | `GET /api/reportes/consultas?estado=` con códigos 200, 400 y 404 |
+
+### Capturas de pantalla
+
+**Estructura de carpetas MVC**
+![Estructura MVC](tp10/capturas/01-estructura-mvc.png)
+
+**Catálogo en la versión MVC nativa**
+![Catálogo MVC](tp10/capturas/02-mvc-catalogo.png)
+
+**Login en la versión MVC nativa**
+![Login MVC](tp10/capturas/03-mvc-login.png)
+
+**Modelo con las consultas SQL separadas**
+![Modelo](tp10/capturas/04-mvc-modelo.png)
+
+**Rutas de Laravel (`php artisan route:list`)**
+![Rutas](tp10/capturas/05-laravel-routes.png)
+
+**Reporte con Blade**
+![Reporte](tp10/capturas/06-laravel-reporte.png)
+
+**API JSON de Laravel**
+![JSON](tp10/capturas/07-laravel-json.png)
+
 ## Autor
 
-Arzadum, Joaquin Jairo – Programación Web, Unidad 4.
+Arzadum, Joaquin Jairo – Programación Web.
